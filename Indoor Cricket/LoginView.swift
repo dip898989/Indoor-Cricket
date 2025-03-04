@@ -7,34 +7,59 @@ struct LoginView: View {
     @StateObject private var matchSettings = MatchSettings()
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
-                Text("Indoor Cricket Live Scoring")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 40)
-
-                TextField("Username", text: $username)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(5)
-
-                SecureField("Password", text: $password)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(5)
-
-                Button(action: authenticateUser) {
-                    Text("Login")
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
+        GeometryReader { geometry in
+            NavigationStack {
+                ZStack {
+                    // Background Image
+                    Spacer()
+                    Image("backgroundImage_test") // Replace with your actual image name
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                        .clipped() // Ensure the image is clipped to its bounds
+                        .ignoresSafeArea() // Ensure it ignores the safe areas
+                    
+                    // Centered Content
+                        VStack {
+                            Spacer() // Top Spacer to push content down
+                            Text("Indoor Cricket Live Scoring")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)
+                                .padding(.bottom, 40)
+                            
+                            TextField("Username", text: $username)
+                                .padding()
+                                .background(Color(.secondarySystemBackground))
+                                .cornerRadius(5)
+                            
+                            SecureField("Password", text: $password)
+                                .padding()
+                                .background(Color(.secondarySystemBackground))
+                                .cornerRadius(5)
+                            
+                            Button(action: authenticateUser) {
+                                Text("Login")
+                                    .foregroundColor(.white)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.blue)
+                                    .cornerRadius(5)
+                            }
+                            .padding(.top, 20)
+                            
+                            Spacer() // Bottom Spacer to push content up
+                        }
                         .padding()
-                        .background(Color.blue)
-                        .cornerRadius(5)
+                        .background(Color.white.opacity(0.7)) // Light background for readability
+                        .cornerRadius(10) // Rounded corners for the container
+                        .shadow(radius: 10) // Optional shadow to make the container stand out
+                        .padding(.horizontal, 20) // Avoid edge sticking
+                        .padding(.vertical, 20)
+                    }
+                    Spacer()
                 }
-                .padding(.top, 20)
-            }
-            .padding()
             .navigationDestination(isPresented: $authViewModel.isAuthenticated) {
                 SelectionView(matchSettings: matchSettings)
                     .environmentObject(authViewModel)
@@ -50,4 +75,3 @@ struct LoginView: View {
         }
     }
 }
-

@@ -31,8 +31,12 @@ struct TeamInputView: View {
             }
             .padding(.top, 20)
 
-            NavigationLink(destination: MatchView(), isActive: $navigateToMatchView) {
-                EmptyView()
+//            NavigationLink(destination: MatchView(), isActive: $navigateToMatchView) {
+//                EmptyView()
+//            }
+            
+            .navigationDestination(isPresented: $navigateToMatchView) {
+                MatchView()
             }
         }
         .padding()

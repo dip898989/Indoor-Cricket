@@ -53,8 +53,12 @@ struct MatchView: View {
 
                 Spacer()
 
-                NavigationLink(destination: SelectionView(matchSettings: matchSettings), isActive: $navigateToSelectionView) {
-                    EmptyView()
+//                NavigationLink(destination: SelectionView(matchSettings: matchSettings), isActive: $navigateToSelectionView) {
+//                    EmptyView()
+//                }
+                
+                .navigationDestination(isPresented: $navigateToSelectionView) {
+                    SelectionView(matchSettings: matchSettings)
                 }
 
                 Button(action: {

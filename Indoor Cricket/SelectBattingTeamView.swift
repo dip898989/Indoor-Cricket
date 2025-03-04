@@ -45,10 +45,20 @@ struct SelectBattingTeamView: View {
 
             Spacer()
 
-            NavigationLink(
-                destination: ScoringView(teamName: selectedTeam, matchSettings: matchSettings),
-                isActive: .constant(!selectedTeam.isEmpty)
-            ) {
+//            NavigationLink(
+//                destination: ScoringView(teamName: selectedTeam, matchSettings: matchSettings),
+//                isActive: .constant(!selectedTeam.isEmpty)
+//            ) {
+//                Text("Next")
+//                    .frame(maxWidth: .infinity)
+//                    .padding()
+//                    .background(selectedTeam.isEmpty ? Color.gray : Color.green)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(8)
+//            }
+            
+            .navigationDestination(isPresented: .constant(!selectedTeam.isEmpty)) {
+                ScoringView(teamName: selectedTeam, matchSettings: matchSettings)
                 Text("Next")
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -56,6 +66,7 @@ struct SelectBattingTeamView: View {
                     .foregroundColor(.white)
                     .cornerRadius(8)
             }
+            
             .disabled(selectedTeam.isEmpty)
             .padding(.top, 20)
         }
