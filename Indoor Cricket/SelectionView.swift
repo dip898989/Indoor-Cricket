@@ -6,6 +6,7 @@ import SwiftUI
 
 struct SelectionView: View {
     @ObservedObject var matchSettings: MatchSettings
+    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var hasChanges: Bool = false
     @State private var path = NavigationPath()
     @State private var selectedRadioID = "Option1"
@@ -242,6 +243,13 @@ struct SelectionView: View {
             .navigationDestination(for: String.self) { value in
                 if value == "Team1DetailsView" {
                     Team1DetailsView(matchSettings: matchSettings)
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Logout") {
+                        authViewModel.isAuthenticated = false
+                    }
                 }
             }
         }

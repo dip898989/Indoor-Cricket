@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var username: String = "Deepesh"
-    @State private var password: String = "Jun@1989"
-    @State private var isAuthenticated: Bool = false
-    @StateObject private var matchSettings = MatchSettings() // Initialize MatchSettings
+    @State private var username: String = ""
+    @State private var password: String = ""
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @StateObject private var matchSettings = MatchSettings()
 
     var body: some View {
         NavigationStack {
@@ -35,17 +35,19 @@ struct LoginView: View {
                 .padding(.top, 20)
             }
             .padding()
-            .navigationDestination(isPresented: $isAuthenticated) {
-                SelectionView(matchSettings: matchSettings) // Pass matchSettings to SelectionView
+            .navigationDestination(isPresented: $authViewModel.isAuthenticated) {
+                SelectionView(matchSettings: matchSettings)
+                    .environmentObject(authViewModel)
             }
         }
     }
 
     private func authenticateUser() {
         if username == "Deepesh" && password == "Jun@1989" {
-            isAuthenticated = true
+            authViewModel.isAuthenticated = true
         } else {
             // Handle authentication failure
         }
     }
 }
+
